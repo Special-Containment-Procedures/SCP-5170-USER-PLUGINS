@@ -1,4 +1,4 @@
-from scp import user
+from scp import user, bot
 from scp.utils.cache import Messages  # type: ignore
 from typing import List
 from scp.utils.parser import getAttr
@@ -15,7 +15,7 @@ async def _(_, message: user.types.Message):
 
 
 SendType = {
-    'Text': user.send_message,
+    'Text': bot.send_message,
     'Sticker': user.send_sticker,
     'Document': user.send_document,
     'Photo': user.send_photo,
