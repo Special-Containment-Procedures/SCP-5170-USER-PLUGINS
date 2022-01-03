@@ -22,6 +22,7 @@ SendType = {
     'Audio': user.send_audio,
     'Voice': user.send_voice,
     'Video': user.send_video,
+    'Animation': user.send_animation,
 }
 
 
@@ -137,13 +138,18 @@ async def dataTypeCheck(
             content,
             caption=text,
         )
+    elif dataType == Types.ANIMATION:
+        return await SendType['Animation'](
+            user.log_channel,
+            content,
+            caption=text,
+        )
 
 
 async def clearMessages(
-    seconds=172800  # 2 days
+    seconds=86400  # 1 day
 ):
     while not await asyncio.sleep(seconds):
-        print(len(Messages))
         Messages.clear()
 
 
