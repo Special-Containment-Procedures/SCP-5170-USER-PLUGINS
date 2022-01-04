@@ -15,14 +15,14 @@ async def _(_, message: user.types.Message):
 
 
 SendType = {
-    'Text': bot.send_message,
-    'Sticker': user.send_sticker,
-    'Document': user.send_document,
-    'Photo': user.send_photo,
-    'Audio': user.send_audio,
-    'Voice': user.send_voice,
-    'Video': user.send_video,
-    'Animation': user.send_animation,
+    Types.TEXT: bot.send_message,
+    Types.STICKER: user.send_sticker,
+    Types.DOCUMENT: user.send_document,
+    Types.PHOTO: user.send_photo,
+    Types.AUDIO: user.send_audio,
+    Types.VOICE: user.send_voice,
+    Types.VIDEO: user.send_video,
+    Types.ANIMATION: user.send_animation,
 }
 
 
@@ -95,51 +95,21 @@ async def dataTypeCheck(
     text: user.md.KanTeXDocument,
 ):
     if dataType == Types.TEXT:
-        return await SendType['Text'](
+        return await SendType[dataType](
             user.log_channel,
             text,
         )
     elif dataType == Types.STICKER:
-        await SendType['Sticker'](
+        await SendType[dataType](
             user.log_channel,
             content,
         )
-        return await SendType['Text'](
+        return await SendType[Types.TEXT](
             user.log_channel,
             text,
         )
-    elif dataType == Types.DOCUMENT:
-        return await SendType['Document'](
-            user.log_channel,
-            content,
-            caption=text,
-        )
-    elif dataType == Types.PHOTO:
-        return await SendType['Photo'](
-            user.log_channel,
-            content,
-            caption=text,
-        )
-    elif dataType == Types.AUDIO:
-        await SendType['Audio'](
-            user.log_channel,
-            content,
-            caption=text,
-        )
-    elif dataType == Types.VOICE:
-        return await SendType['Voice'](
-            user.log_channel,
-            content,
-            caption=text,
-        )
-    elif dataType == Types.VIDEO:
-        return await SendType['Video'](
-            user.log_channel,
-            content,
-            caption=text,
-        )
-    elif dataType == Types.ANIMATION:
-        return await SendType['Animation'](
+    else:
+        return await SendType[dataType](
             user.log_channel,
             content,
             caption=text,
