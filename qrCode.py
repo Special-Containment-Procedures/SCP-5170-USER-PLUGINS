@@ -82,8 +82,7 @@ async def _(_, message: user.types.Message):
     ):
         return
     f = await message.reply_to_message.download()
-    for x in BarCodeReader().decode(f):
-        out = reFresh(x)
+    out = reFresh(BarCodeReader().decode(f)[0])
     doc = user.md.KanTeXDocument()
     sec = user.md.Section('qrCode Decoded:')
     for key, value in out.items():
