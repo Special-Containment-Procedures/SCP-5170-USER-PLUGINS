@@ -1,6 +1,5 @@
 from scp import user
-from pyzxing import BarCodeReader
-from io import BytesIO
+import aiohttp
 import os
 
 
@@ -82,33 +81,20 @@ async def _(_, message: user.types.Message):
     ):
         return
     f = await message.reply_to_message.download()
-    out = reFresh(BarCodeReader().decode(f)[0])
-    doc = user.md.KanTeXDocument()
-    sec = user.md.Section('qrCode Decoded:')
-    for key, value in out.items():
-        sec.append(
-            user.md.KeyValueItem(
-                user.md.Bold(key), user.md.Code(value),
-            ),
-        )
-    doc.append(sec)
-    try:
-        await message.reply(doc, quote=True)
-    except user.exceptions.MessageTooLong:
-        data = BytesIO(str(out).encode())
-        data.name = 'qrRead.txt'
-        await message.reply_document(
-            document=data,
-            quote=True,
-        )
+    await message.reply(
+        user.md.KanTeXDocument(
+            user.md.Section('qrCode Decoded:',
+                user.md.KeyValueItem(user.md.Bold('data'), user.md.Code(
+                    await QrRead(f),
+                )))
+        ), quote=True)
     os.remove(f)
 
 
-def reFresh(content: dict):
-    temp = {}
-    for key, value in content.items():
-        try:
-            temp[key] = value.decode('utf-8')
-        except AttributeError:
-            ...
-    return temp
+async def QrRead(file: str):
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+            "http://api.qrserver.com/v1/read-qr-code/",
+            data={"file": open(file, "rb")}
+        ) as resp:
+            return (await resp.json())[0]['symbol'][0]['data']
