@@ -1,7 +1,7 @@
 from scp import user
 
 
-__PLUGIN__ = 'UrbanDictionary'
+__PLUGIN__ = 'UrbanDict'
 __DOC__ = str(
     user.md.KanTeXDocument(
         user.md.Section(
