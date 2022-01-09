@@ -72,7 +72,7 @@ async def _(_, message: user.types.Message):
                 ),
                 quote=True,
             )
-        validate, token = parser.checkToken(ans.text)
+        validate, token = parser.tokenFetcher(ans.text)
         if validate:
             return await message.reply(
                 user.md.KanTeXDocument(
