@@ -61,12 +61,11 @@ async def _(_, message: user.types.Message):
         return await message.delete()
     data = _gen(message.text.split(None, 1)[1])
     await message.reply_document(
-        (await user.Request(
+        (await (await user.aioclient.post(
             'https://api.qrcode-monkey.com//qr/custom',
-            type='post',
             json=data,
         )
-        )['imageUrl'].replace(
+        ).json())['imageUrl'].replace(
             '//api', 'https://api',
         ),
         quote=True,
@@ -92,9 +91,8 @@ async def _(_, message: user.types.Message):
 
 
 async def QrRead(file: str):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(
-            "http://api.qrserver.com/v1/read-qr-code/",
-            data={"file": open(file, "rb")}
-        ) as resp:
-            return (await resp.json())[0]['symbol'][0]['data']
+    async with user.aioclient.post(
+        "http://api.qrserver.com/v1/read-qr-code/",
+        data={"file": open(file, "rb")}
+    ) as resp:
+        return (await resp.json())[0]['symbol'][0]['data']

@@ -94,26 +94,29 @@ async def dataTypeCheck(
     content: str,
     text: user.md.KanTeXDocument,
 ):
-    if dataType == Types.TEXT:
-        return await SendType[dataType](
-            user.log_channel,
-            text,
-        )
-    elif dataType == Types.STICKER:
-        await SendType[dataType](
-            user.log_channel,
-            content,
-        )
-        return await SendType[Types.TEXT](
-            user.log_channel,
-            text,
-        )
-    else:
-        return await SendType[dataType](
-            user.log_channel,
-            content,
-            caption=text,
-        )
+    try:
+        if dataType == Types.TEXT:
+            return await SendType[dataType](
+                user.log_channel,
+                text,
+            )
+        elif dataType == Types.STICKER:
+            await SendType[dataType](
+                user.log_channel,
+                content,
+            )
+            return await SendType[Types.TEXT](
+                user.log_channel,
+                text,
+            )
+        else:
+            return await SendType[dataType](
+                user.log_channel,
+                content,
+                caption=text,
+            )
+    except user.exceptions.exceptions.bad_request_400.FileReferenceExpired:
+        ...
 
 
 async def clearMessages(

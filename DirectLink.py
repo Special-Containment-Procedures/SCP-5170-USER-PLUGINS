@@ -24,11 +24,11 @@ __DOC__ = str(
 async def _(_, message: user.types.Message):
     f = await message.reply_to_message.download()
     r = await message.reply('**Uploading**', quote=True)
-    out = await user.Request(
+    data = await user.aioclient.post(
         'https://api.anonfiles.com/upload',
-        type='post',
         data={'file': open(f, 'rb')},
     )
+    out = await data.json()
     os.remove(f)
     if out['status']:
         text = user.md.KanTeXDocument(
