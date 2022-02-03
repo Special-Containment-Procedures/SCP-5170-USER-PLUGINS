@@ -35,7 +35,7 @@ async def _(_, messages: List):
     for mDel in messages:
         for message in Messages:
             if (
-                mDel.chat.id == message.chat.id
+                getattr(mDel.chat, 'id', None) == getattr(message.chat, 'id', None)
                 and mDel.message_id == message.message_id
             ):
                 dataType, content, caption = getType(message)
