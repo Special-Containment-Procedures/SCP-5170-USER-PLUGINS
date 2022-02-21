@@ -158,7 +158,7 @@ async def _(_, query: bot.types.InlineQuery):
             [[
                 user.types.InlineKeyboardButton(
                     'UserLink',
-                    url=f'tg://user?id={u.id}',
+                    user_id=u.id,
                 ),
                 user.types.InlineKeyboardButton(
                     'Description', callback_data=f'cdesc_{u.id}',
