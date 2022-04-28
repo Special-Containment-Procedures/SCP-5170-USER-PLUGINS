@@ -36,7 +36,7 @@ async def _(_, messages: List):
         for message in Messages:
             if (
                 getattr(mDel.chat, 'id', None) == getattr(message.chat, 'id', None)
-                and mDel.message_id == message.message_id
+                and mDel.message_id == message.id
             ):
                 dataType, content, caption = getType(message)
                 text = user.md.KanTeXDocument(
@@ -64,7 +64,7 @@ async def _(_, messages: List):
                             user.md.KeyValueItem(
                                 user.md.Bold('message_id'),
                                 user.md.Code(
-                                    message.message_id,
+                                    message.id,
                                 ),
                             ),
                             user.md.KeyValueItem(

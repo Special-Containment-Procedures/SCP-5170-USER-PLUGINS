@@ -18,7 +18,7 @@ async def _(_, message: user.types.Message):
     a function to log Spam Detection
     """
     uid = message.from_user or message.sender_chat
-    if await is_flood(uid) and await user.send(
+    if await is_flood(uid) and await user.invoke(
         user.raw.functions.messages.ReportSpam(
             peer=await user.resolve_peer(uid.id),
         ),
@@ -42,7 +42,7 @@ async def _(_, message: user.types.Message):
                         ),
                         user.md.KeyValueItem(
                             user.md.Bold('message_id'), user.md.Code(
-                                message.message_id,
+                                message.id,
                             ),
                         ),
                     ),
@@ -87,7 +87,7 @@ async def _(_, message: user.types.Message):
     """
     uid = message.from_user.id if message.from_user else message.sender_chat.id
     url = message.reply_to_message.link
-    msg = message.reply_to_message.message_id
+    msg = message.reply_to_message.id
     cht = message.chat.id
     return await bot.send_message(
         user.log_channel,
@@ -108,7 +108,7 @@ async def _(_, message: user.types.Message):
                     ),
                     user.md.KeyValueItem(
                         user.md.Bold('message_id'), user.md.Code(
-                            message.message_id,
+                            message.id,
                         ),
                     ),
                 ),
@@ -166,7 +166,7 @@ async def _(_, query: user.types.CallbackQuery):
     uid = data[1]
     message_id = data[2]
     reason = data[3]
-    await user.send(
+    await user.invoke(
         user.raw.functions.messages.Report(
             peer=await user.resolve_peer(int(uid)),
             id=[int(message_id)],

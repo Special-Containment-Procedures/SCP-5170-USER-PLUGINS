@@ -70,7 +70,7 @@ async def _(_, query: bot.types.InlineQuery):
         u = await user.get_chat(get_user)
     try:
         onlines = (
-            await user.send(
+            await user.invoke(
                 user.raw.functions.messages.GetOnlines(
                     peer=await user.resolve_peer(get_user),
                 ),

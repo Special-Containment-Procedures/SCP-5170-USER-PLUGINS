@@ -18,7 +18,6 @@ exec_tasks = {}
     ~user.filters.forwarded
     & ~user.filters.sticker
     & ~user.filters.via_bot
-    & ~user.filters.edited
     & user.filters.me
     & user.filters.command(
         'eval',
