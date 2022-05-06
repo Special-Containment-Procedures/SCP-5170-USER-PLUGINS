@@ -1,6 +1,6 @@
 from scp import user, bot
 from scp.utils.spamCheck import is_flood, cleaner
-from scp.utils.selfInfo import info
+from scp.utils.selfInfo import info # type: ignore
 import asyncio
 
 
@@ -176,16 +176,15 @@ async def _(_, query: user.types.CallbackQuery):
     )
     await query.edit_message_reply_markup(
         reply_markup=user.types.InlineKeyboardMarkup(
-            [[
-                user.types.InlineKeyboardButton(
-                    'message.link',
-                    url='https://t.me/c/{}/{}'.format(
-                        uid.replace('-100', ''),
-                        message_id,
-                    ),
-                ),
-            ]],
-        ),
+            [
+                [
+                    user.types.InlineKeyboardButton(
+                        'message.link',
+                        url=f"https://t.me/c/{uid.replace('-100', '')}/{message_id}"
+                    )
+                ]
+            ]
+        )
     )
 
 

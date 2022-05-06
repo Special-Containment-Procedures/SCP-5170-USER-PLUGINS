@@ -1,6 +1,7 @@
 from scp import user, bot
 from scp.utils.selfInfo import info  # type: ignore
 from scp.utils.strUtils import name_check, bool_check  # type: ignore
+import contextlib
 
 __PLUGIN__ = 'UserInfo'
 __DOC__ = str(
@@ -31,10 +32,8 @@ async def _(_, message: user.types.Message):
             get_user = message.reply_to_message.from_user.id
     elif len(cmd) > 1:
         get_user = cmd[1]
-        try:
+        with contextlib.suppress(ValueError):
             get_user = int(cmd[1])
-        except ValueError:
-            pass
     try:
         Uid = (await user.get_chat(get_user)).id
         x = await user.get_inline_bot_results(
