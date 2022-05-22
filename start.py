@@ -1,7 +1,8 @@
 from scp import user, __version__, bot, RUNTIME, __longVersion__
+from hy import __version__ as hyVer
+from pyrogram import __version__ as pyroVer
 import time
 from scp.utils.parser.timeUtils import HumanizeTime
-from scp.utils.selfInfo import info  # type: ignore
 from scp.utils.unpack import unpackInlineMessage  # type: ignore
 from scp.utils.cache import Messages  # type: ignore
 
@@ -10,13 +11,13 @@ from scp.utils.cache import Messages  # type: ignore
     user.sudo & user.command('scp'),
 )
 async def _(_, message: user.types.Message):
-    x = await user.get_inline_bot_results(info['_bot_username'], 'scp')
+    x = await user.get_inline_bot_results(bot.me.username, 'scp')
     for m in x.results:
         await message.reply_inline_bot_result(x.query_id, m.id, quote=True)
 
 
 @bot.on_inline_query(
-    bot.filters.user(info['_user_id'])
+    bot.filters.user(user.me.id)
     & bot.filters.regex('^scp'),
 )
 async def _(_, query: bot.types.InlineQuery):
@@ -68,6 +69,10 @@ async def _(_, query: bot.types.InlineQuery):
                     user.md.Bold('message_recieved'),
                     user.md.Code(str(len(Messages))),
                 ),
+                user.md.KeyValueItem(
+                    user.md.Bold('base'),
+                    user.md.Code(f'pyro({pyroVer})/hy({hyVer})'),
+                ),
             ),
         ),
     )
@@ -97,7 +102,7 @@ async def _(_, query: bot.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(info['_user_id']))
+    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^close_message'),
 )
 async def _(_, query: user.types.CallbackQuery):

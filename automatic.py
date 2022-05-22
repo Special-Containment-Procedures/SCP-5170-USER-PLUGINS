@@ -1,6 +1,5 @@
 from scp import user, bot
 from scp.utils.spamCheck import is_flood, cleaner
-from scp.utils.selfInfo import info # type: ignore
 import asyncio
 
 
@@ -158,7 +157,7 @@ async def _(_, message: user.types.Message):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(info['_user_id']))
+    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^report_'),
 )
 async def _(_, query: user.types.CallbackQuery):

@@ -1,5 +1,4 @@
 from scp import user, bot
-from scp.utils.selfInfo import info  # type: ignore
 from scp.utils.strUtils import name_check, bool_check  # type: ignore
 import contextlib
 
@@ -37,7 +36,7 @@ async def _(_, message: user.types.Message):
     try:
         Uid = (await user.get_chat(get_user)).id
         x = await user.get_inline_bot_results(
-            info['_bot_username'],
+            bot.me.username,
             '_userInfo ' + str(Uid),
         )
     except (
@@ -51,7 +50,7 @@ async def _(_, message: user.types.Message):
 
 @bot.on_inline_query(
     user.filters.user(
-        info['_user_id'],
+        user.me.id,
     )
     & user.filters.regex('^_userInfo'),
 )
@@ -179,7 +178,7 @@ async def _(_, query: bot.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(info['_user_id']))
+    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^cperm_'),
 )
 async def _(_, query: user.types.CallbackQuery):
@@ -191,7 +190,7 @@ async def _(_, query: user.types.CallbackQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(info['_user_id']))
+    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^cdesc_'),
 )
 async def _(_, query: user.types.CallbackQuery):
@@ -202,7 +201,7 @@ async def _(_, query: user.types.CallbackQuery):
     )
 
 
-def permissionParser(perms):
+def permissionParser(perms):  # sourcery skip: use-fstring-for-concatenation
     text = ''
     text += 'Message: ' + bool_check(perms.can_send_messages) + '\n'
     text += 'Media: ' + bool_check(perms.can_send_media_messages) + '\n'

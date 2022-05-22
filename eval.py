@@ -8,7 +8,6 @@ import asyncio
 from shortuuid import ShortUUID
 from io import StringIO, BytesIO
 from scp import user, bot
-from scp.utils.selfInfo import info  # type: ignore
 from scp.utils.parser import getAttr
 
 exec_tasks = {}
@@ -121,7 +120,7 @@ async def pyexec(client: user, message: user.types.Message):
 async def listexec(_, message: user.types.Message):
     try:
         x = await user.get_inline_bot_results(
-            info['_bot_username'],
+            bot.me.username,
             '_listEval',
         )
     except (
@@ -134,7 +133,7 @@ async def listexec(_, message: user.types.Message):
 
 
 @bot.on_inline_query(
-    user.filters.user(info['_user_id'])
+    user.filters.user(user.me.id)
     & user.filters.regex('^_listEval'),
 )
 async def _(_, query: user.types.InlineQuery):
@@ -144,14 +143,8 @@ async def _(_, query: user.types.InlineQuery):
             callback_data='cancel_eval_all',
         ),
     ]]
-    for x, _ in exec_tasks.items():
-        buttons.append(
-            [
-                user.types.InlineKeyboardButton(
-                    text=x, callback_data=f'cancel_eval_{x}',
-                ),
-            ],
-        )
+    buttons.extend([user.types.InlineKeyboardButton(text=x, callback_data=f'cancel_eval_{x}',),] for x, _ in exec_tasks.items())
+
     await query.answer(
         results=[
             user.types.InlineQueryResultArticle(
@@ -175,7 +168,7 @@ async def _(_, query: user.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    user.filters.user(info['_user_id'])
+    user.filters.user(user.me.id)
     & user.filters.regex('^cancel_'),
 )
 async def cancelexec(_, query: user.types.CallbackQuery):

@@ -1,5 +1,4 @@
 from scp import user, bot
-from scp.utils.selfInfo import info
 
 
 __PLUGIN__ = 'pipeChat'
@@ -44,7 +43,7 @@ async def _(_, message: user.types.Message):
     if len(_chats) == 0:
         return await message.reply('No pipes running', quote=True)
     x = await user.get_inline_bot_results(
-        info['_bot_username'],
+        bot.me.username,
         'pipeList',
     )
     for m in x.results:
@@ -52,7 +51,7 @@ async def _(_, message: user.types.Message):
 
 
 @bot.on_inline_query(
-    user.filters.user(info['_user_id'])
+    user.filters.user(user.me.id)
     & user.filters.regex('^pipeList'),
 )
 async def _(_, query: user.types.InlineQuery):
@@ -89,7 +88,7 @@ async def _(_, query: user.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    user.filters.user(info['_user_id'])
+    user.filters.user(user.me.id)
     & user.filters.regex('^pipeCheck_'),
 )
 async def _(_, query: user.types.CallbackQuery):
@@ -135,7 +134,7 @@ async def _(_, query: user.types.CallbackQuery):
 
 
 @bot.on_callback_query(
-    user.filters.user(info['_user_id'])
+    user.filters.user(user.me.id)
     & user.filters.regex('^pipeRemove_'),
 )
 async def _(_, query: user.types.CallbackQuery):
