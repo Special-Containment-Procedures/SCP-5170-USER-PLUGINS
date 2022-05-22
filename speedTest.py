@@ -16,7 +16,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.sudo & user.command('speedTest'))
+@user.on_message(user.filters.sudo & user.command('speedTest'))
 async def _(_, message: user.types.Message):
     reply = await message.reply('`SpeedTest ...`', quote=True)
     s: Speedtest = await Speedtest()

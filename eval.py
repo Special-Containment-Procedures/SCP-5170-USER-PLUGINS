@@ -20,7 +20,7 @@ exec_tasks = {}
     & user.filters.me
     & user.filters.command(
         'eval',
-        prefixes=user._config.get('scp-5170', 'prefixes').split(),
+        prefixes=user.config.get('scp-5170', 'prefixes').split(),
     ),
 )
 async def pyexec(client: user, message: user.types.Message):
@@ -196,7 +196,7 @@ async def cancelexec(_, query: user.types.CallbackQuery):
 
 
 @user.on_message(
-    user.sudo
+    user.filters.sudo
     & user.command('GetID'),
 )
 async def _(_, message: user.types.Message):

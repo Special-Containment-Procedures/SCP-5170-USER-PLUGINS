@@ -19,7 +19,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.sudo & user.command('url'))
+@user.on_message(user.filters.sudo & user.command('url'))
 async def _(_, message: user.types.Message):
     if len(message.command) == 1:
         return await message.delete()

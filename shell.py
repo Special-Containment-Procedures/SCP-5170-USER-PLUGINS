@@ -12,7 +12,7 @@ from scp import user
     & user.filters.me
     & user.filters.command(
         'shell',
-        prefixes=user._config.get('scp-5170', 'prefixes').split(),
+        prefixes=user.config.get('scp-5170', 'prefixes').split(),
     ),
 )
 async def shell(_, message: user.types.Message):

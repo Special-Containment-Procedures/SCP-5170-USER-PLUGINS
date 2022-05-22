@@ -8,7 +8,7 @@ from scp.utils.cache import Messages  # type: ignore
 
 
 @user.on_message(
-    user.sudo & user.command('scp'),
+    user.filters.sudo & user.command('scp'),
 )
 async def _(_, message: user.types.Message):
     x = await user.get_inline_bot_results(bot.me.username, 'scp')
@@ -102,7 +102,7 @@ async def _(_, query: bot.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
+    (bot.filters.user(bot.sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^close_message'),
 )
 async def _(_, query: user.types.CallbackQuery):

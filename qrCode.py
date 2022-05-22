@@ -55,7 +55,7 @@ def _gen(content: str):
     }
 
 
-@user.on_message(user.sudo & user.command('qrGen'))
+@user.on_message(user.filters.sudo & user.command('qrGen'))
 async def _(_, message: user.types.Message):
     if len(message.text.split()) == 1:
         return await message.delete()
@@ -72,7 +72,7 @@ async def _(_, message: user.types.Message):
     )
 
 
-@user.on_message(user.sudo & user.filters.reply & user.command('qrRead'))
+@user.on_message(user.filters.sudo & user.filters.reply & user.command('qrRead'))
 async def _(_, message: user.types.Message):
     if (
         not message.reply_to_message.document

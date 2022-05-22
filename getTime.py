@@ -18,7 +18,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.sudo & user.command('time'))
+@user.on_message(user.filters.sudo & user.command('time'))
 async def _(_, message: user.types.Message):
     if len(message.command) == 1:
         return None

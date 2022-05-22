@@ -5,9 +5,9 @@ import asyncio
 
 @user.on_message(
     ~user.filters.bot &
-    ~user.sudo &
+    ~user.filters.sudo &
     ~user.filters.chat(
-        [int(i) for i in user._config.get('scp-5170', 'IgnoreGroups').split()],
+        [int(i) for i in user.config.get('scp-5170', 'IgnoreGroups').split()],
     )
     & user.filters.group,
     group=100,
@@ -23,7 +23,7 @@ async def _(_, message: user.types.Message):
         ),
     ):
         return await bot.send_message(
-            user.log_channel,
+            user.config.getint('scp-5170', 'LogChannel'),
             user.md.KanTeXDocument(
                 user.md.Section(
                     '#SpamDetect',
@@ -89,7 +89,7 @@ async def _(_, message: user.types.Message):
     msg = message.reply_to_message.id
     cht = message.chat.id
     return await bot.send_message(
-        user.log_channel,
+        user.config.getint('scp-5170', 'LogChannel'),
         user.md.KanTeXDocument(
             user.md.Section(
                 '#Report',
@@ -157,7 +157,7 @@ async def _(_, message: user.types.Message):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
+    (bot.filters.user(bot.sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^report_'),
 )
 async def _(_, query: user.types.CallbackQuery):

@@ -17,7 +17,7 @@ __DOC__ = str(
 
 
 @user.on_message(
-    user.sudo &
+    user.filters.sudo &
     user.command('info'),
 )
 async def _(_, message: user.types.Message):
@@ -178,7 +178,7 @@ async def _(_, query: bot.types.InlineQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
+    (bot.filters.user(bot.sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^cperm_'),
 )
 async def _(_, query: user.types.CallbackQuery):
@@ -190,7 +190,7 @@ async def _(_, query: user.types.CallbackQuery):
 
 
 @bot.on_callback_query(
-    (bot.filters.user(bot._sudo) | bot.filters.user(user.me.id))
+    (bot.filters.user(bot.sudo) | bot.filters.user(user.me.id))
     & bot.filters.regex('^cdesc_'),
 )
 async def _(_, query: user.types.CallbackQuery):

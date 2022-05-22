@@ -99,21 +99,21 @@ async def dataTypeCheck(
     try:
         if dataType == Types.TEXT:
             return await SendType[dataType](
-                user.log_channel,
+                user.config.getint('scp-5170', 'LogChannel'),
                 text,
             )
         elif dataType == Types.STICKER:
             await SendType[dataType](
-                user.log_channel,
+                user.config.getint('scp-5170', 'LogChannel'),
                 content,
             )
             return await SendType[Types.TEXT](
-                user.log_channel,
+                user.config.getint('scp-5170', 'LogChannel'),
                 text,
             )
         else:
             return await SendType[dataType](
-                user.log_channel,
+                user.config.getint('scp-5170', 'LogChannel'),
                 content,
                 caption=text,
             )

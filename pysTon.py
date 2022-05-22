@@ -27,10 +27,10 @@ __DOC__ = str(
 
 
 @user.on_message(
-    user.sudo
+    user.filters.sudo
     & user.filters.command(
         'exec',
-        prefixes=user._config.get('scp-5170', 'prefixes').split(),
+        prefixes=user.config.get('scp-5170', 'prefixes').split(),
     ),
 )
 async def _(_, message: user.types.Message):
@@ -82,7 +82,7 @@ async def _(_, message: user.types.Message):
 
 
 @user.on_message(
-    user.sudo
+    user.filters.sudo
     & user.command('execLang'),
 )
 async def _(_, message: user.types.Message):

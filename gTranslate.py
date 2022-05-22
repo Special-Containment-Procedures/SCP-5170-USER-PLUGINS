@@ -27,7 +27,7 @@ __DOC__ = str(
 trl = Translator()
 
 
-@user.on_message(user.sudo & user.command('tr'))
+@user.on_message(user.filters.sudo & user.command('tr'))
 async def _(_, message: user.types.Message):
     if message.reply_to_message and (
         message.reply_to_message.text
@@ -82,7 +82,7 @@ async def _(_, message: user.types.Message):
     )
 
 
-@user.on_message(user.sudo & user.command('tts'))
+@user.on_message(user.filters.sudo & user.command('tts'))
 async def _(_, message: user.types.Message):
     text = message.text.split(None, 1)[1] if len(
         message.command,
