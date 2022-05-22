@@ -18,7 +18,7 @@ __DOC__ = str(
 
 @user.on_message(
     user.filters.sudo &
-    user.command('info'),
+    user.filters.command('info'),
 )
 async def _(_, message: user.types.Message):
     cmd = message.command

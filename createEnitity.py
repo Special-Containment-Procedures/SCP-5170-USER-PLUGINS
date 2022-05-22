@@ -20,7 +20,7 @@ __DOC__ = str(
 convLock = asyncio.Lock()
 
 
-@user.on_message(user.filters.sudo & user.command('create'))
+@user.on_message(user.filters.sudo & user.filters.command('create'))
 async def _(_, message: user.types.Message):
     if len(message.command) == 1:
         return await message.delete()

@@ -19,7 +19,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.filters.sudo & user.command('url'))
+@user.on_message(user.filters.sudo & user.filters.command('url'))
 async def _(_, message: user.types.Message):
     if len(message.command) == 1:
         return await message.delete()
@@ -39,7 +39,7 @@ async def _(_, message: user.types.Message):
     await message.reply(text, quote=True)
 
 
-@user.on_message(user.filters.me & user.command('dns'))
+@user.on_message(user.filters.me & user.filters.command('dns'))
 async def _(_, message: user.types.Message):
     query = '' if len(message.command) == 1 else message.command[1]
     doc = user.md.KanTeXDocument()

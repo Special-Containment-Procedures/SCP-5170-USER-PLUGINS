@@ -77,7 +77,7 @@ def _parseReport(report: str):
     & user.filters.reply
     & (
         user.filters.regex(r'(?i)@admin(s)?')
-        | user.command('report', prefixes='/')
+        | user.filters.command('report', prefixes='/')
     ),
 )
 async def _(_, message: user.types.Message):

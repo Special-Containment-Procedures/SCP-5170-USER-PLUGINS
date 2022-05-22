@@ -8,7 +8,7 @@ from scp.utils.cache import Messages  # type: ignore
 
 
 @user.on_message(
-    user.filters.sudo & user.command('scp'),
+    user.filters.sudo & user.filters.command('scp'),
 )
 async def _(_, message: user.types.Message):
     x = await user.get_inline_bot_results(bot.me.username, 'scp')

@@ -19,7 +19,7 @@ __DOC__ = str(
 @user.on_message(
     user.filters.sudo
     & (user.filters.reply | ~user.filters.text)
-    & user.command('uploadFile'),
+    & user.filters.command('uploadFile'),
 )
 async def _(_, message: user.types.Message):
     f = await message.reply_to_message.download()

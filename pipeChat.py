@@ -29,7 +29,7 @@ async def _(_, message: user.types.Message):
             await user.forward_messages(y, x, message.id)
 
 
-@user.on_message(user.filters.sudo & user.command('pipeChat'))
+@user.on_message(user.filters.sudo & user.filters.command('pipeChat'))
 async def _(_, message: user.types.Message):
     fromChat = int(message.text.split(' ')[1])
     toChat = int(message.text.split(' ')[2])
@@ -38,7 +38,7 @@ async def _(_, message: user.types.Message):
     _chats[fromChat] = toChat
 
 
-@user.on_message(user.filters.sudo & user.command('listPipes'))
+@user.on_message(user.filters.sudo & user.filters.command('listPipes'))
 async def _(_, message: user.types.Message):
     if len(_chats) == 0:
         return await message.reply('No pipes running', quote=True)

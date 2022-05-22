@@ -28,7 +28,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.filters.me & user.command('notes'))
+@user.on_message(user.filters.me & user.filters.command('notes'))
 async def _(_, message: user.types.Message):
     data = await Notes().load()
     doc = user.md.KanTeXDocument()
@@ -39,7 +39,7 @@ async def _(_, message: user.types.Message):
     return await message.reply(doc, quote=True)
 
 
-@user.on_message(user.filters.me & user.command('addNote'))
+@user.on_message(user.filters.me & user.filters.command('addNote'))
 async def _(_, message: user.types.Message):
     data = await Notes().load()
     args = message.text.split(None, 2)
@@ -56,7 +56,7 @@ async def _(_, message: user.types.Message):
     )
 
 
-@user.on_message(user.filters.me & user.command('getNote'))
+@user.on_message(user.filters.me & user.filters.command('getNote'))
 async def _(_, message: user.types.Message):
     data = await Notes().load()
     doc = user.md.KanTeXDocument()
@@ -75,7 +75,7 @@ async def _(_, message: user.types.Message):
     return await message.reply(doc, quote=True)
 
 
-@user.on_message(user.filters.me & user.command('deleteNote'))
+@user.on_message(user.filters.me & user.filters.command('deleteNote'))
 async def _(_, message: user.types.Message):
     data = await Notes().load()
     if data.get(message.command[1], None):

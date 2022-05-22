@@ -83,7 +83,7 @@ async def _(_, message: user.types.Message):
 
 @user.on_message(
     user.filters.sudo
-    & user.command('execLang'),
+    & user.filters.command('execLang'),
 )
 async def _(_, message: user.types.Message):
     client = PystonClient()

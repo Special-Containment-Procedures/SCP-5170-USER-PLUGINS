@@ -116,7 +116,7 @@ async def pyexec(client: user, message: user.types.Message):
         )
 
 
-@user.on_message(user.filters.me & user.command('listEval'))
+@user.on_message(user.filters.me & user.filters.command('listEval'))
 async def listexec(_, message: user.types.Message):
     try:
         x = await user.get_inline_bot_results(
@@ -197,7 +197,7 @@ async def cancelexec(_, query: user.types.CallbackQuery):
 
 @user.on_message(
     user.filters.sudo
-    & user.command('GetID'),
+    & user.filters.command('GetID'),
 )
 async def _(_, message: user.types.Message):
     message = message.reply_to_message or message

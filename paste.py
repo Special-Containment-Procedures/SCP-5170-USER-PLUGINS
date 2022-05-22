@@ -17,7 +17,7 @@ __DOC__ = str(
 )
 
 
-@user.on_message(user.filters.sudo & user.command('paste'))
+@user.on_message(user.filters.sudo & user.filters.command('paste'))
 async def _(_, message: user.types.Message):
     text = message.text.split(None, 1)[1] if len(
         message.command,
