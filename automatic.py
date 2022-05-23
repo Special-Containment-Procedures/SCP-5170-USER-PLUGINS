@@ -165,8 +165,7 @@ async def _(_, query: user.types.CallbackQuery):
     uid = data[1]
     message_id = data[2]
     reason = data[3]
-    await user.invoke(
-        user.raw.functions.messages.Report(
+    await user.Report(
             peer=await user.resolve_peer(int(uid)),
             id=[int(message_id)],
             reason=_parseReport(reason),
