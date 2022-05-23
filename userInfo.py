@@ -67,12 +67,9 @@ async def _(_, query: bot.types.InlineQuery):
     except IndexError:
         u = await user.get_chat(get_user)
     try:
-        onlines = (
-            await user.GetOnlines(
+        onlines = (await user.GetOnlines(
                     peer=await user.resolve_peer(get_user),
-                ),
-            )
-        ).onlines
+                )).onlines
     except user.exceptions.PeerIdInvalid:
         onlines = 0
     if isinstance(u, user.types.Chat):

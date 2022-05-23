@@ -170,7 +170,6 @@ async def _(_, query: user.types.CallbackQuery):
             id=[int(message_id)],
             reason=_parseReport(reason),
             message=reason,
-        ),
     )
     await query.edit_message_reply_markup(
         reply_markup=user.types.InlineKeyboardMarkup(
