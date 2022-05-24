@@ -44,9 +44,7 @@ async def _(_, message: user.types.Message):
     query = '' if len(message.command) == 1 else message.command[1]
     doc = user.md.KanTeXDocument()
     sec = user.md.Section(f'IP-info: `{query}`')
-    for key, value in (
-        await user.Request('http://ip-api.com/json/' + query, type='get')
-    ).items():
+    for key, value in (await user.aioclient.get(f'http://ip-api.com/json/{query}')).json().items():
         sec.append(
             user.md.KeyValueItem(
                 user.md.Bold(key), user.md.Code(value),

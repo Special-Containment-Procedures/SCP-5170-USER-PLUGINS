@@ -32,10 +32,10 @@ async def _(_, message: user.types.Message):
     if len(message.text.split()) == 1:
         return await message.delete()
     text = message.text.split(None, 1)[1]
-    response = await user.Request(
+    request = await user.aioclient.get(
         f'http://api.urbandictionary.com/v0/define?term={text}',
-        type='get',
     )
+    response = await request.json()
     text = user.md.KanTeXDocument(
         user.md.Section(
             'UrbanDictionary',
