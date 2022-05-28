@@ -24,7 +24,8 @@ exec_tasks = {}
     ),
 )
 async def pyexec(client: user, message: user.types.Message):
-    code = message.text.split(None, 1)[1]
+    code = message.text.split(None, 1)[1].replace(
+        "“", '"').replace("”", '"').replace("‘", "'").replace("’", "'")
     tree = ast.parse(code)
     obody = tree.body
     body = obody.copy()
